@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy # deployment name
+  #namespace: vicky
+  labels:
+    env: test-deploy # desired label for deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels: # replica label
+      env: test # replica label == pod label
+  template: # selector matchLabels must be a match [same] as labels
+    metadata:
+      name: nginx-pod
+      labels: # pod label
+        env: test # pod label == replica label
+    spec:
+      containers:
+      - name: nginx-con
+        image: nginx
+        ports:
+        - containerPort: 80
